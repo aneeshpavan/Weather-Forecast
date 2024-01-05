@@ -1,113 +1,107 @@
-//2988507 = Paris
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?id=2988507&units=metric&appid=eca7ff6bec5818bcf14d8651eab63276",
-function(data){
-    var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var name = data.name + ", " +data.sys.country;
-    var temp = Math.floor(data.main.temp) + "<sup>&deg;</sup>";
-    var value = data.weather[0].main;
-    var value1 = Math.floor(data.main.temp_min)+ "<sup>&deg;</sup>";
-    var value2 = Math.floor(data.main.temp_max)+ "<sup>&deg;</sup>";
+const weatherIconMap = {
+    'Clouds': 'clouds.png',
+    'Snow': 'clouds-snow.png',
+    'Rain': 'sun-clouds-rain.png',
+    'Clear': 'sun.png',
+    'Thunderstorm': 'lightning.png',
+};
 
-    $(".icon").attr("src",icon);
-    $(".name").append(name);
-    $(".temp").append(temp);
-    $(".value").append(value);
-    $(".value1").append(value1);
-    $(".value2").append(value2);
+function fetchWeatherData(location) {
+    const apiKey = 'eca7ff6bec5818bcf14d8651eab63276';
+    let apiUrl;
+
+    if(location.includes(',')) {
+        // It's coordinates
+        const [lat, lon] = location.split(',');
+        apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    } else {
+        // It's a city name
+        apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
+    }
+
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        displayWeatherCard(data);
+    })
+    .catch(error => {
+        console.error('Error fetching weather data:', error);
+    });
 }
-);
 
-//5128581 = NewYork
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?id=5128581&units=metric&appid=eca7ff6bec5818bcf14d8651eab63276",
-function(data){
-    var iconny = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var nameny = data.name + ", " +data.sys.country;
-    var tempny = Math.floor(data.main.temp) + "<sup>&deg;</sup>";
-    var valueny = data.weather[0].main;
-    var value1ny = Math.floor(data.main.temp_min)+ "<sup>&deg;</sup>";
-    var value2ny = Math.floor(data.main.temp_max)+ "<sup>&deg;</sup>";
-
-    $(".iconny").attr("src",iconny);
-    $(".nameny").append(nameny);
-    $(".tempny").append(tempny);
-    $(".valueny").append(valueny);
-    $(".value1ny").append(value1ny);
-    $(".value2ny").append(value2ny);
+function getWeatherIcon(weatherCondition) {
+    return weatherIconMap[weatherCondition] || 'clouds.png';
 }
-);
 
-//2643743 = London
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?id=2643743&units=metric&appid=eca7ff6bec5818bcf14d8651eab63276",
-function(data){
-    var iconl = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var namel = data.name + ", " +data.sys.country;
-    var templ = Math.floor(data.main.temp) + "<sup>&deg;</sup>";
-    var valuel = data.weather[0].main;
-    var value1l = Math.floor(data.main.temp_min)+ "<sup>&deg;</sup>";
-    var value2l = Math.floor(data.main.temp_max)+ "<sup>&deg;</sup>";
+function displayWeatherCard(data) {
+    const weatherDisplay = document.getElementById('weather-display');
+    const weatherCondition = data.weather[0].main;
+    const weatherIconFilename = getWeatherIcon(weatherCondition);
+    const weatherIconSrc = `/icons/${weatherIconFilename}`;
 
-    $(".iconl").attr("src",iconl);
-    $(".namel").append(namel);
-    $(".templ").append(templ);
-    $(".valuel").append(valuel);
-    $(".value1l").append(value1l);
-    $(".value2l").append(value2l);
+    const cardHtml = `
+    <div class="card">
+        <div class="weather-location">${data.name}, ${data.sys.country}</div>
+        <img src="${weatherIconSrc}" alt="${weatherCondition}" class="weather-icon">
+        <div class="weather-temp">${Math.round(data.main.temp)}°C (Feels like ${Math.round(data.main.feels_like)}°C)</div>
+        <div class="weather-description">${data.weather[0].main} - ${data.weather[0].description}</div>
+        <div class="weather-details">
+            <p><span class="title">Temp Range:</span> ${Math.round(data.main.temp_min)}°C - ${Math.round(data.main.temp_max)}°C</p>
+            <p><span class="title">Humidity:</span> ${data.main.humidity}% | <span class="title">Wind:</span> ${data.wind.speed} m/s</p>
+            <p><span class="title">Pressure:</span> ${data.main.pressure} hPa | <span class="title">Visibility:</span> ${data.visibility / 1000} km</p>
+            <p><span class="title">Sunrise:</span> ${new Date(data.sys.sunrise * 1000).toLocaleTimeString()} | <span class="title">Sunset:</span> ${new Date(data.sys.sunset * 1000).toLocaleTimeString()}</p>
+        </div>
+    </div>
+`;
+    
+    weatherDisplay.innerHTML = cardHtml;
 }
-);
 
-//1609348 = Bangkok
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?id=1609348&units=metric&appid=eca7ff6bec5818bcf14d8651eab63276",
-function(data){
-    var iconbk = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var namebk = data.name + ", " +data.sys.country;
-    var tempbk = Math.floor(data.main.temp) + "<sup>&deg;</sup>";
-    var valuebk = data.weather[0].main;
-    var value1bk = Math.floor(data.main.temp_min)+ "<sup>&deg;</sup>";
-    var value2bk = Math.floor(data.main.temp_max)+ "<sup>&deg;</sup>";
 
-    $(".iconbk").attr("src",iconbk);
-    $(".namebk").append(namebk);
-    $(".tempbk").append(tempbk);
-    $(".valuebk").append(valuebk);
-    $(".value1bk").append(value1bk);
-    $(".value2bk").append(value2bk);
+
+// Add event listeners for search and location buttons
+document.getElementById('searchBtn').addEventListener('click', () => {
+    const location = document.getElementById('searchInput').value;
+    fetchWeatherData(location);
+});
+
+document.getElementById('locationBtn').addEventListener('click', () => {
+    useCurrentLocation();
+});
+
+function searchWeather() {
+    var input = document.getElementById('searchInput').value;
+    fetchWeatherData(input);
 }
-);
 
-//1819729 = Hong Kong
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?id=1819729&units=metric&appid=eca7ff6bec5818bcf14d8651eab63276",
-function(data){
-    var iconhg = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var namehg = data.name + ", " +data.sys.country;
-    var temphg = Math.floor(data.main.temp) + "<sup>&deg;</sup>";
-    var valuehg = data.weather[0].main;
-    var value1hg = Math.floor(data.main.temp_min)+ "<sup>&deg;</sup>";
-    var value2hg = Math.floor(data.main.temp_max)+ "<sup>&deg;</sup>";
-
-    $(".iconhg").attr("src",iconhg);
-    $(".namehg").append(namehg);
-    $(".temphg").append(temphg);
-    $(".valuehg").append(valuehg);
-    $(".value1hg").append(value1hg);
-    $(".value2hg").append(value2hg);
+function useCurrentLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else { 
+        alert("Geolocation is not supported by this browser.");
+    }
 }
-);
 
-//292224 = Dubai
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?id=292224&units=metric&appid=eca7ff6bec5818bcf14d8651eab63276",
-function(data){
-    var icond = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var named = data.name + ", " +data.sys.country;
-    var tempd = Math.floor(data.main.temp) + "<sup>&deg;</sup>";
-    var valued = data.weather[0].main;
-    var value1d = Math.floor(data.main.temp_min)+ "<sup>&deg;</sup>";
-    var value2d = Math.floor(data.main.temp_max)+ "<sup>&deg;</sup>";
-
-    $(".icond").attr("src",icond);
-    $(".named").append(named);
-    $(".tempd").append(tempd);
-    $(".valued").append(valued);
-    $(".value1d").append(value1d);
-    $(".value2d").append(value2d);
+function showPosition(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var coords = latitude + ',' + longitude;
+    fetchWeatherData(coords); // Assuming fetchWeatherData can handle coordinates
 }
-);
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}

@@ -1,64 +1,141 @@
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url("IMG_1341.jpg");
-    font-family: sans-serif;
-    backdrop-filter: blur(5px);
-    
-}
-.col-md-6
-{
-    padding: 5% !important;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url(1.png);
 }
 
-.header {
-    color: black;
-    font-weight: lighter;
+header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+h1 {
+    font-size: 2.5em;
+}
 
-@media(max-width:768px) {
-    .hel
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.search-input, .search-btn, .location-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+
+    .search-input
     {
-        font-size: x-large;
-        padding: 5%;
+        width: 80%;
+        margin: 0;
     }
-    .card {
-        margin: -0.8rem;
-        width: 95% !important;
+    .shortdesc{
+        margin: 0 !important;
+        padding: 0 !important;
     }
+    .search-container{
+        width: 90%;
+    }
+    body{
+        background-position: center;
+    }
+}
+
+.search-input {
+    flex-grow: 2;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.search-btn, .location-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.search-btn:hover, .location-btn:hover {
+    background-color: lightgrey;
 }
 
 .card {
-  height: 260px;
-  width: 380px;
-  border-radius: 30px !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(50px);
-  padding: 20px;
+    border-radius: 20px !important;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s;
+    max-height: 400px;
+    display: flex !important;
+    backdrop-filter: blur(5px) !important;
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    padding: 2em;
+    margin: 1em;
 }
 
-.name h1,.nameny h1,.namel h1,.namebk h1,.namehg h1,.named h1{
-    margin-bottom: 0.2rem;
-    font-size: 4rem;
+.card:hover {
+    transform: scale(1.05);
 }
 
-.temp,.tempny,.templ,.tempbk,.temphg,.tempd{
-    font-size: 2.6rem;
-    margin-bottom: 1rem;
-}
-
-.value,.value1,.value2,.valueny,.value1ny,.value2ny,.valuel,.value1l,.value2l,.valuebk,.value1bk,.value2bk,.valuehg,.value1hg,.value2hg,
-.valued,.value1d,.value2d{
-    color: black;
+.title {
     font-weight: bold;
 }
 
-.icon,.iconny,.iconl,.iconbk,.iconhg,.icond{
-    width: 6rem;
-    align-self: flex-end;
-    margin-right: -4rem;
-    margin-top: -4rem;
-    z-index: 1;
+.weather-location {
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+
+.weather-temp {
+    font-size: 2em;
+}
+
+.weather-min-max {
+    font-size: 1em;
+    opacity: 0.8;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.weather-icon {
+    width: 80px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
