@@ -37,7 +37,7 @@ function displayWeatherCard(data) {
     const weatherDisplay = document.getElementById('weather-display');
     const weatherCondition = data.weather[0].main;
     const weatherIconFilename = getWeatherIcon(weatherCondition);
-    const weatherIconSrc = `/icons/${weatherIconFilename}`;
+    const weatherIconSrc = `${weatherIconFilename}`;
 
     const cardHtml = `
     <div class="card">
